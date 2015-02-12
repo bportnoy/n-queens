@@ -177,14 +177,6 @@
       }
       return count > 1;
     },
-      //      21,0,1,2,3
-      //   -2    x,x,x,x
-      // [ -1    x,x,x,x
-      //    0 xx[1,0,0,0],
-      //    1 xx[0,0,0,0],
-      //    2 xx[0,0,1,0],
-      //    3 xx[0,0,1,0]
-      // ]
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
