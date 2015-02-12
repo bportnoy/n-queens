@@ -161,21 +161,21 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
 
-    /* TO DO
-        Refactor diagonals to use one main function
-    */
-
 
     hasMinorDiagonalConflictAt: function(index) {
       var rows = this.rows();
       var count = 0;
-      // while ( this._isInBounds( index,index ) ){
-      //   if ( rows[index][index] === 1 ) count++;
-        // rowIndex++;
-        // colIndex--;
-      // }
+      var currentRow = 0;
+      while(!this._isInBounds(currentRow,index)){
+        index--;
+        currentRow++;
+      }
+      while(this._isInBounds(currentRow,index)){
+        if (rows[currentRow][index] === 1) count++;
+        index--;
+        currentRow++;
+      }
       return count > 1;
-      return false; // fixme
     },
       //      21,0,1,2,3
       //   -2    x,x,x,x
@@ -190,15 +190,9 @@
     hasAnyMinorDiagonalConflicts: function() {
       var n = this.get('n');
       var rows = this.rows();
-      for (var i = n - 1; i >= 0; i--){
-        // console.log('['+ 0 +','+ i +']');
-        if ( this.hasMinorDiagonalConflictAt(0,i) ) return true;
-      }
       for (var i = 0; i < n; i++){
-        // console.log('['+ i +','+ (n - 1) +']');
-        if ( this.hasMinorDiagonalConflictAt( i, n-1 ) ) return true;
+        if ( this.hasMinorDiagonalConflictAt(i) ) return true;
       }
-      // console.log("complete");
       return false;
     }
 
