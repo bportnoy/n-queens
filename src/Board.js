@@ -127,14 +127,18 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     // hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-    hasMajorDiagonalConflictAt: function(rowIndex,colIndex){
-      // var n = this.get('n');
+    hasMajorDiagonalConflictAt: function(index){
       var rows = this.rows();
       var count = 0;
-      while (this._isInBounds(rowIndex,colIndex)){
-        if ( rows[rowIndex][colIndex] === 1 ) count++;
-        rowIndex++;
-        colIndex++;
+      var currentRow = 0;
+      while(!this._isInBounds(currentRow,index)){
+        index++;
+        currentRow++;
+      }
+      while(this._isInBounds(currentRow,index)){
+        if (rows[currentRow][index] === 1) count++;
+        index++;
+        currentRow++;
       }
       return count > 1;
     },
@@ -142,13 +146,10 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      var n = this.get('n');
+      var nMinus = this.get('n')-1;
       var rows = this.rows();
-      for (var i = 0; i < n; i++){
-        if ( this.hasMajorDiagonalConflictAt(0,i) ) return true;
-      }
-      for (var i = 0; i < n; i++){
-        if ( this.hasMajorDiagonalConflictAt(i,0) ) return true;
+      for (var i = -nMinus; i <= nMinus; i++){
+        if (this.hasMajorDiagonalConflictAt(i)) return true;
       }
       return false;
     },
@@ -165,22 +166,24 @@
     */
 
 
-    hasMinorDiagonalConflictAt: function(rowIndex, colIndex) {
+    hasMinorDiagonalConflictAt: function(index) {
       var rows = this.rows();
       var count = 0;
-      while ( this._isInBounds( rowIndex, colIndex ) ){
-        if ( rows[rowIndex][colIndex] === 1 ) count++;
-        rowIndex++;
-        colIndex--;
-      }
+      // while ( this._isInBounds( index,index ) ){
+      //   if ( rows[index][index] === 1 ) count++;
+        // rowIndex++;
+        // colIndex--;
+      // }
       return count > 1;
       return false; // fixme
     },
-
-      // [   0 1 2
-      //   0[1,0,0,0],
-      //   1[0,0,0,0],
-      //   2[0,0,1,0]
+      //      21,0,1,2,3
+      //   -2    x,x,x,x
+      // [ -1    x,x,x,x
+      //    0 xx[1,0,0,0],
+      //    1 xx[0,0,0,0],
+      //    2 xx[0,0,1,0],
+      //    3 xx[0,0,1,0]
       // ]
 
     // test if any minor diagonals on this board contain conflicts
