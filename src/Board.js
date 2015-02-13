@@ -96,6 +96,20 @@
       return false;
     },
 
+    pieccesPlaced: function(){
+      var n = this.get('n');
+      var placed = 0;
+      var rows = this.rows();
+      for (var i = 0; i < n; i++){
+        for (var k = 0; k < n; k++){
+          if (rows[i][k] === 1){
+            placed++;
+          }
+        }
+      }
+      return placed;
+    },
+
 
 
     // COLUMNS - run from top to bottom
@@ -182,7 +196,7 @@
     hasAnyMinorDiagonalConflicts: function() {
       var n = this.get('n');
       var rows = this.rows();
-      for (var i = 0; i < n; i++){
+      for (var i = 0; i < (n*2)-1; i++){
         if ( this.hasMinorDiagonalConflictAt(i) ) return true;
       }
       return false;
